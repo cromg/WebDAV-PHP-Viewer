@@ -108,7 +108,7 @@ if (isset($_REQUEST['token']) || isset($_COOKIE['vktoken']) || (isset($_REQUEST[
 			echo $head;
 			$sharelnk=urlencode('http://'.$_SERVER['HTTP_HOST']."/disk$dir");
 			echo toolbar($sharelnk,false);
-			echo '<div class="container" style="margin-top:50px"><div class="row"><div class="offset3 span6">';
+			echo '<div class="container" style="margin-top:50px"><div class="row"><div class="offset2 span8">';
 			if (isset($_COOKIE['greeting_closed']) && $_COOKIE['greeting_closed']==1){} else { echo $greeting; }
 			echo navbar($dir);
 			
