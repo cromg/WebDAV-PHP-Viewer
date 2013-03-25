@@ -146,7 +146,7 @@ if (isset($_REQUEST['token']) || isset($_COOKIE['vktoken']) || (isset($_REQUEST[
 					$href=($show=='*dirup*') ? $upd : $href;
 					$href=str_replace("'",'**!*',$href);
 					$size=$b['D:PROPSTAT'][$i]['D:PROP'][$i]['D:GETCONTENTLENGTH'];
-					$type=isset($b['D:PROPSTAT'][$i]['D:PROP'][$i]['D:GETCONTENTTYPE']) ? $b['D:PROPSTAT'][$i]['D:PROP'][$i]['D:GETCONTENTTYPE'] : '#folder#';
+					$type=($size==0) ? 'file' : 'folder';
 					$files=array_merge($files,array($i=>array('href'=>$href,'show'=>$show,'size'=>$size,'type'=>$type)));
 					$i++;
 				}
@@ -160,7 +160,7 @@ if (isset($_REQUEST['token']) || isset($_COOKIE['vktoken']) || (isset($_REQUEST[
 						$link='';
 					} else if ($show=='*dirup*'){
 						$link="<li><a href='/disk$href'><i class='icon-arrow-up'></i> Вверх</a></li>";
-					} else if ($type=='#folder#'){
+					} else if ($type=='folder'){
 						$link="<li><a href='/disk$href'><i class='icon-folder-open'></i> $show</a></li>";
 					} else {
 						$link='';

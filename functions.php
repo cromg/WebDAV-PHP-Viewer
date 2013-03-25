@@ -266,67 +266,76 @@ function tmpl_preview($dir,$size,$content,$sharelnk,$downlnk){
 }
 
 function stype($type,$name,$answer=1){
-	$s='na';
+	$s='Неизвестный';
 	$t='preview';
-	if ((isset($type)) && ($type!='')){
-		switch($type){
-			case 'application/x-7z-compressed': $s='Архив 7Z';$t='preview'; break;
+	if ((isset($name)) && ($name!='') && ($name!='*dirup*')){
+		$ext=explode('.',$name);
+		$ext=$ext[count($ext)-1];
+		$ext=strtolower($ext);
+		switch($ext){
+			case 'xbmp':
+			case 'bmp': $s='Изображение BMP';$t='image'; break;
 			
-			case 'application/x-zip-compressed': $s='Архив Zip';$t='gdocs'; break;
+			case 'gif': $s='Изображение GIF';$t='image'; break;
 			
-			case 'text/plain': $s='Текстовый документ';$t='pltext'; break;
+			case 'png': $s='Изображение PNG';$t='image'; break;
 			
-			case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
-			case 'application/vnd.ms-powerpoint': $s='Презентация MS Power Point';$t='gdocs'; break;
+			case 'jpg':
+			case 'jpe':
+			case 'jpeg': $s='Изображение JPEG';$t='image'; break;
 			
-			case 'application/vnd.oasis.opendocument.presentation': $s='Презентация Open Document';$t='gdocs'; break;
+			case 'tif':
+			case 'tiff': $s='Изображение TIFF';$t='image'; break;
 			
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-			case 'application/msword': $s='Документ MS Word';$t='gdocs'; break;
+			case 'djvu': $s='Документ DJVU';$t='preview'; break;
 			
-			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-			case 'application/vnd.ms-excel':
-			case 'application/msexcel': $s='Документ MS Excel';$t='gdocs'; break;
+			case 'pdf': $s='Документ PDF';$t='gdocs'; break;
 			
-			case 'application/pdf': $s='Документ PDF';$t='gdocs'; break;
+			case 'xls':
+			case 'xlsx': $s='Документ MS Excel';$t='gdocs'; break;
 			
-			case 'image/vnd.djvu': $s='Документ DJVU';$t='preview'; break;
+			case 'doc':
+			case 'docx': $s='Документ MS Word';$t='gdocs'; break;
 			
-			case 'image/jpg':
-			case 'image/jpeg': $s='Изображение JPEG';$t='image'; break;
+			case 'odf': $s='Open Document Format';$t='gdocs'; break;
 			
-			case 'image/png': $s='Изображение PNG';$t='image'; break;
+			case 'ppt':
+			case 'pptx': $s='Презентация MS Power Point';$t='gdocs'; break;
 			
-			case 'image/gif': $s='Изображение GIF';$t='image'; break;
+			case '7z':
+			case '7zip': $s='Архив 7Z';$t='preview'; break;
 			
-			case 'image/bmp':
-			case 'image/xbmp': $s='Изображение BMP';$t='image'; break;
+			case 'zip': $s='Архив ZIP';$t='preview'; break;
 			
-			default: $s='na';$t='preview';
+			case 'rar': $s='Архив RAR';$t='preview'; break;
+			
+			case 'txt':
+			case 'ini':
+			case 'cfg':
+			case 'pas':
+			case 'c':
+			case 'h':
+			case 'cpp':
+			case 'php':
+			case 'md':
+			case 'css': $s='Текстовый документ';$t='pltext'; break;
+
+			case 'xmcd': $s='Документ Mathcad';$t='preview'; break;
+			case 'accdb': $s='База данных Microsoft Access';$t='preview'; break;
+			case 'xml': $s='XML документ';$t='pltext'; break;
+			case 'htm':
+			case 'html': $s='HTML документ';$t='frame'; break;
+			case 'css': $s='Таблица стилей';$t='pltext'; break;
+			case 'sql': $s='Запрос SQL';$t='pltext'; break;
+			case 'ini': 
+			case 'cfg': $s='Файл клнфигурации';$t='pltext'; break;
+			
+			case 'fla': $s='Проект Flash';$t='preview'; break;
+			case 'swf': $s='Файл Adobe Flash';$t='preview'; break;
+			case 'psd': $s='Документ Adobe Photoshop';$t='gdocs'; break;
+			case 'ai':  $s='Документ Adobe Illustrator';$t='preview'; break;
+			default: $s='Неизвестный';$t='preview';
 		}
-		if ((isset($name)) && ($name!='') && ($name!='*dirup*') && $s=='na'){
-			$ext=explode('.',$name);
-			$ext=$ext[count($ext)-1];
-			switch($ext){
-				case 'xmcd': $s='Документ Mathcad';$t='preview'; break;
-				case 'accdb': $s='База данных Microsoft Access';$t='preview'; break;
-				case 'xml': $s='XML документ';$t='pltext'; break;
-				case 'htm':
-				case 'html': $s='HTML документ';$t='frame'; break;
-				case 'css': $s='Таблица стилей';$t='pltext'; break;
-				case 'sql': $s='Запрос SQL';$t='pltext'; break;
-				case 'ini': 
-				case 'cfg': $s='Файл клнфигурации';$t='pltext'; break;
-				
-				case 'fla': $s='Проект Flash';$t='preview'; break;
-				case 'swf': $s='Файл Adobe Flash';$t='preview'; break;
-				case 'psd': $s='Документ Adobe Photoshop';$t='gdocs'; break;
-				case 'ai':  $s='Документ Adobe Illustrator';$t='preview'; break;
-				default: $s='Неизвестный';$t='preview';
-			}
-		}
-	} else {
-		$s='Неизвестный';$t='preview';
 	}
 	if ($answer==1){ return $s; } else { return $t; }
 }
