@@ -139,7 +139,6 @@ if (isset($_REQUEST['token']) || isset($_COOKIE['vktoken']) || (isset($_REQUEST[
 				echo "<ul class='nav nav-tabs nav-stacked'>";
 				$files=array();
 				$i=0;
-				var_dump($fls);
 				foreach($fls as $b){
 					$href=$b['D:HREF'];
 					$show=urldecode($b['D:PROPSTAT'][$i]['D:PROP'][$i]['D:DISPLAYNAME']);
