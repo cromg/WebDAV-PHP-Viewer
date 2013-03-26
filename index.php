@@ -89,7 +89,7 @@ if (isset($_REQUEST['token']) || isset($_COOKIE['vktoken']) || (isset($_REQUEST[
 			$txsrc='http://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']."?sec=$skey&down=1&size=$size&dir=$dir";
 
 			$sharelnk=urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']."?preview=1&size=$size&dir=$dir");
-			$content="<div class='well'><div class='alert alert-info'>Предпросмотр невозможен для файлов данного типа.</div></div>";
+			$content="<div class='well'><div class='alert alert-info alert-block'><h4>Предпросмотр невозможен для файлов данного типа.</h4>Вы можете скачать этот файл, нажав на кнопку \"Скачать\".</div></div>";
 			tmpl_preview($dir,$size,$content,$sharelnk,$txsrc);
 		} else if (isset($_REQUEST['_close_greeting'])){
 			setcookie('greeting_closed',1,time()+365*24*60*60,'/');
@@ -128,14 +128,14 @@ if (isset($_REQUEST['token']) || isset($_COOKIE['vktoken']) || (isset($_REQUEST[
 			$curd=isset($d) ? $d : '/';
 			$props=propfind($dir);
 			$xml=XMLtoArray($props);
-			$fls=$xml['D:MULTISTATUS']['D:RESPONSE'];
-			if (isset($fls['D:HREF']) || count($fls)==0){
+			if (!$xml || isset($xml['D:MULTISTATUS']['D:RESPONSE']['D:HREF']) || count($xml['D:MULTISTATUS']['D:RESPONSE'])==0){
 				echo "	<ul class='nav nav-tabs nav-stacked'>
 							<li><a href='$shup'><i class='icon-arrow-up'></i> Вверх</a></li>
 							<li class='active'><a><i class='icon-warning-sign'></i> Папка пустая</a></li>
 						</ul>
 						";
 			} else {
+				$fls=$xml['D:MULTISTATUS']['D:RESPONSE'];
 				echo "<ul class='nav nav-tabs nav-stacked'>";
 				$files=array();
 				$i=0;

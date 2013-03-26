@@ -160,6 +160,7 @@ function XMLtoArray($XML)
         if ($x_type == 'open')
             $level[$x_level] = $x_tag;
         $start_level = 1;
+		//$xml_array=NULL;
         $php_stmt = '$xml_array';
         if ($x_type=='close' && $x_level!=1)
             $multi_key[$x_tag][$x_level]++;
@@ -195,7 +196,7 @@ function XMLtoArray($XML)
             }
         }
     }
-    return $xml_array;
+	return @is_null($xml_array) ? false : $xml_array;
 }
 
 function format_bytes($a_bytes)
