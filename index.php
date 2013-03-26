@@ -139,14 +139,15 @@ if (isset($_REQUEST['token']) || isset($_COOKIE['vktoken']) || (isset($_REQUEST[
 				echo "<ul class='nav nav-tabs nav-stacked'>";
 				$files=array();
 				$i=0;
+				var_dump($fls);
 				foreach($fls as $b){
 					$href=$b['D:HREF'];
 					$show=urldecode($b['D:PROPSTAT'][$i]['D:PROP'][$i]['D:DISPLAYNAME']);
-					$show=($show==$curd) ? '*dirup*' : $show;
+					$show=($show==$curd && $i==0) ? '*dirup*' : $show;
 					$href=($show=='*dirup*') ? $upd : $href;
 					$href=str_replace("'",'**!*',$href);
 					$size=$b['D:PROPSTAT'][$i]['D:PROP'][$i]['D:GETCONTENTLENGTH'];
-					$type=($size==0) ? 'file' : 'folder';
+					$type=($size=='0') ? 'folder' : 'file';
 					$files=array_merge($files,array($i=>array('href'=>$href,'show'=>$show,'size'=>$size,'type'=>$type)));
 					$i++;
 				}
@@ -179,9 +180,9 @@ if (isset($_REQUEST['token']) || isset($_COOKIE['vktoken']) || (isset($_REQUEST[
 						$link='';
 					} else if ($show=='*dirup*'){
 						$link='';
-					} else if ($type=='#folder#'){
+					} else if ($type=='folder'){
 						$link='';
-					} else {
+					} else if ($type=='file'){
 						$stype=stype($type,$show);
 						$sact=stype($type,$show,2);
 						$sizen=format_bytes($size);
