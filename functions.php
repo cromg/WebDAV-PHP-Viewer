@@ -300,6 +300,7 @@ function stype($type,$name,$answer=1){
 			
 			case 'odf': $s='Open Document Format';$t='gdocs'; break;
 			
+			case 'pps':
 			case 'ppt':
 			case 'pptx': $s='Презентация MS Power Point';$t='gdocs'; break;
 			
