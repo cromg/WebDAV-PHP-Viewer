@@ -16,7 +16,7 @@ $cip=($_SERVER['REMOTE_ADDR']==$_SERVER['SERVER_ADDR'])?$_SERVER['HTTP_X_REAL_IP
 
 /**/
 if (isset($_REQUEST['token']) || isset($_COOKIE['vktoken']) || (isset($_REQUEST['sec']) && $_REQUEST['sec']==$skey)  || (isset($forever_token) && $forever_token != '') || allowip($cip)){
-	$dir=isset($_REQUEST['dir']) ? str_replace(' ','%20',$_REQUEST['dir']) : '/';
+	$dir=isset($_REQUEST['dir']) ? str_replace('**!*',"'",str_replace('*!**','%26',str_replace(' ','%20',$_REQUEST['dir']))) : '/';
 	$ok=1;
 	if (isset($_REQUEST['token']) || isset($_COOKIE['vktoken'])){
 		/* security check */
@@ -145,6 +145,8 @@ if (isset($_REQUEST['token']) || isset($_COOKIE['vktoken']) || (isset($_REQUEST[
 					$show=($show==$curd && $i==0) ? '*dirup*' : $show;
 					$href=($show=='*dirup*') ? $upd : $href;
 					$href=str_replace("'",'**!*',$href);
+					$href=str_replace("&",'*!**',$href);
+					$href=str_replace("%26",'*!**',$href);
 					$size=$b['D:PROPSTAT'][$i]['D:PROP'][$i]['D:GETCONTENTLENGTH'];
 					$type=($size=='0') ? 'folder' : 'file';
 					$files=array_merge($files,array($i=>array('href'=>$href,'show'=>$show,'size'=>$size,'type'=>$type)));
