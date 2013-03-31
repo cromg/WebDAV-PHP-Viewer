@@ -213,7 +213,7 @@ if (isset($_REQUEST['token']) || isset($_COOKIE['vktoken']) || (isset($_REQUEST[
 	if ($t==1){
 		setcookie('vktoken',$user_token,time()+1800,'/');
 		setcookie('vkuser',$user_id,time()+1800,'/');
-		$redirto=$_SESSION['redirto'];
+		$redirto=isset($_SESSION['redirto']) ? $_SESSION['redirto'] : '';
 		header("Location: ?login=1&token=$user_token&user_id=$user_id$redirto");
 	} else {
 		die('Доступ запрещён!');
