@@ -333,7 +333,7 @@ function stype($type,$name,$answer=1){
 			case 'cfg': $s='Файл клнфигурации';$t='pltext'; break;
 			
 			case 'fla': $s='Проект Flash';$t='preview'; break;
-			case 'swf': $s='Файл Adobe Flash';$t='preview'; break;
+			case 'swf': $s='Файл Adobe Flash';$t='swf'; break;
 			case 'psd': $s='Документ Adobe Photoshop';$t='gdocs'; break;
 			case 'ai':  $s='Документ Adobe Illustrator';$t='preview'; break;
 			default: $s='Неизвестный';$t='preview';

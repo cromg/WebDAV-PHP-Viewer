@@ -34,15 +34,16 @@ if (isset($_REQUEST['token']) || isset($_COOKIE['vktoken']) || (isset($_REQUEST[
 	if ($ok){
 		$size=isset($_REQUEST['size']) ? $_REQUEST['size'] : 0;
 		if (isset($_REQUEST['down'])){
-			$ctype=(isset($_REQUEST['type']) && $_REQUEST['type']=='html') ? true : false;
+			$ctype=isset($_REQUEST['type']) ? ($_REQUEST['type']=='html') ? 'html' : 'none' : false;
 			$name=explode('/',$dir);
 			$name=urldecode($name[count($name)-1]);
 			header("Pragma: public");
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: public",FALSE);
-			if ($ctype){
+			if ($ctype=='html'){
 				header('Content-type: text/html');
+			} else if ($ctype=='none'){
 			} else {
 				header("Content-Description: File Transfer");
 				header("Content-type: application/octet-stream");
@@ -61,6 +62,15 @@ if (isset($_REQUEST['token']) || isset($_COOKIE['vktoken']) || (isset($_REQUEST[
 
 			$sharelnk=urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']."?image=1&size=$size&dir=$dir");
 			$content="<div class='well'><div style='text-align:center'><a href='$imgsrc'><img src='$imgsrc'></a></div></div>";
+			
+			tmpl_preview($dir,$size,$content,$sharelnk,$txsrc);
+		} else if (isset($_REQUEST['swf'])){
+			$imgsrc="?down=1&type=1&size=$size&dir=$dir";
+			$txsrc='http://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']."?sec=$skey&down=1&type=1&size=$size&dir=$dir";
+
+			$sharelnk=urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']."?image=1&size=$size&dir=$dir");
+			
+			$content="<div class='well'><div style='text-align:center'><object classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000' codebase='http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0' width='100%' height='400' align='middle'><param name='allowScriptAccess' value='sameDomain' /><param name='allowFullScreen' value='true' /><param name='movie' value='$imgsrc' /><param name='loop' value='true' /><param name='quality' value='high' /><param name='bgcolor' value='#ffffff' /><embed src='$imgsrc' loop='true' quality='high' bgcolor='#ffffff' width='100%' height='400' align='middle' allowScriptAccess='sameDomain' allowFullScreen='true' type='application/x-shockwave-flash' pluginspage='http://www.adobe.com/go/getflashplayer_ru' /></object></div></div>";
 			
 			tmpl_preview($dir,$size,$content,$sharelnk,$txsrc);
 		} else if (isset($_REQUEST['pltext'])){
