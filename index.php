@@ -99,7 +99,7 @@ if (isset($_REQUEST['token']) || isset($_COOKIE['vktoken']) || (isset($_REQUEST[
 			$txsrc='http://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']."?sec=$skey&down=1&size=$size&dir=$dir";
 
 			$sharelnk=urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']."?preview=1&size=$size&dir=$dir");
-			$content="<div class='well'><div class='alert alert-info alert-block'><h4>Предпросмотр невозможен для файлов данного типа.</h4>Вы можете скачать этот файл, нажав на кнопку \"Скачать\".</div></div>";
+			$content="<div class='well'><div class='alert alert-info alert-block'><h4>Предпросмотр невозможен для файлов данного типа.</h4>Вы можете скачать этот файл, нажав на кнопку \"Скачать файл\".</div></div>";
 			tmpl_preview($dir,$size,$content,$sharelnk,$txsrc);
 		} else if (isset($_REQUEST['_close_greeting'])){
 			setcookie('greeting_closed',1,time()+365*24*60*60,'/');

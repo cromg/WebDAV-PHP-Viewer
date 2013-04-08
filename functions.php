@@ -214,7 +214,7 @@ function format_bytes($a_bytes)
     }
 }
 
-function toolbar($sharelnk,$downlnk){
+function toolbar($sharelnk){
 	global $shortener;
 	$tb="<div class='navbar navbar-fixed-top'><div class='navbar-inner'><div class='container'>
 		<a class='brand' href='/disk/'>Диск</a>
@@ -222,9 +222,6 @@ function toolbar($sharelnk,$downlnk){
 			<li><a href='//helpcast.ru/'>Блог</a></li>
 			<li><a href='//vk.com/club46640318'>Группа В Контакте</a></li>
 			<li><a href='$shortener$sharelnk'>Короткая ссылка</a></li>";
-	if ($downlnk){
-			$tb.="<li><button onClick=\"location.href='$downlnk'\" class='btn btn-success'><i class='icon-arrow-down'></i> Скачать</button></li>";
-	}
 	$tb.="
 		</ul>
 		<ul class='nav pull-right'>
@@ -255,15 +252,16 @@ function navbar($dir){
 }
 
 function tmpl_preview($dir,$size,$content,$sharelnk,$downlnk){
-	global $head, $footerp, $greeting;
+	global $head, $footerp, $greeting, $vkapiid;
 	header('Content-type: text/html; charset=utf-8');
 	echo $head;
-	echo toolbar($sharelnk,$downlnk);
-	echo "<div class='container' style='margin-top:50px'><div class='row'><div class='offset1 span10'>";
+	echo toolbar($sharelnk);
+	echo "<div class='container' style='margin-top:50px'>";
 	if (isset($_COOKIE['greeting_closed']) && $_COOKIE['greeting_closed']==1){} else { echo $greeting; }
 	echo navbar($dir);
+	echo "<div class='row'><div class='span8'>";
 	echo $content;
-	echo '</div></div></div>' . $footerp .'</body></html>';
+	echo '</div><div class="span4"><div class="well well-small"><a class="btn btn-large btn-block btn-success" href="'. $downlnk .'"><i class="icon-white icon-arrow-down"></i> Скачать файл</a><a class="btn btn-block btn-primary" href="'. $sharelnk .'"><i class="icon-white icon-share"></i> Короткая ссылка</a></div><div class="well well-small"><script>VK.init({apiId: '. $vkapiid .', onlyWidgets: true});</script><div id="vk_comments"></div><script>VK.Widgets.Comments("vk_comments", {limit: 10, width: "400", attach: "link"});</script></div><div class="well">' . $footerp .'</div></div></div></body></html>';
 }
 
 function stype($type,$name,$answer=1){
