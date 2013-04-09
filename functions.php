@@ -252,7 +252,7 @@ function navbar($dir){
 }
 
 function tmpl_preview($dir,$size,$content,$sharelnk,$downlnk){
-	global $head, $footerp, $greeting, $vkapiid;
+	global $head, $footerp, $greeting, $vkapiid, $shortener;
 	header('Content-type: text/html; charset=utf-8');
 	echo $head;
 	echo toolbar($sharelnk);
@@ -261,7 +261,7 @@ function tmpl_preview($dir,$size,$content,$sharelnk,$downlnk){
 	echo navbar($dir);
 	echo "<div class='row'><div class='span8'>";
 	echo $content;
-	echo '</div><div class="span4"><div class="well well-small"><a class="btn btn-large btn-block btn-success" href="'. $downlnk .'"><i class="icon-white icon-arrow-down"></i> Скачать файл</a><a class="btn btn-block btn-primary" href="'. $sharelnk .'"><i class="icon-white icon-share"></i> Короткая ссылка</a></div><div class="well well-small"><script>VK.init({apiId: '. $vkapiid .', onlyWidgets: true});</script><div id="vk_comments"></div><script>VK.Widgets.Comments("vk_comments", {limit: 10, width: "400", attach: "link"});</script></div><div class="well">' . $footerp .'</div></div></div></body></html>';
+	echo '</div><div class="span4"><div class="well well-small"><a class="btn btn-large btn-block btn-success" href="'. $downlnk .'"><i class="icon-white icon-arrow-down"></i> Скачать файл</a><a class="btn btn-block btn-primary" href="'. $shortener.$sharelnk .'"><i class="icon-white icon-share"></i> Короткая ссылка</a></div><div class="well well-small"><script>VK.init({apiId: '. $vkapiid .', onlyWidgets: true});</script><div id="vk_comments"></div><script>VK.Widgets.Comments("vk_comments", {limit: 10, width: "400", attach: "link"});</script></div><div class="well">' . $footerp .'</div></div></div></body></html>';
 }
 
 function stype($type,$name,$answer=1){
